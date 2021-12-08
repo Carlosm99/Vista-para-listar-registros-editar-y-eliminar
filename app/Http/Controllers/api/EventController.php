@@ -52,8 +52,16 @@ class EventController extends Controller
     public function show($id)
     {
         //$ev = Event::find($id);
-        $ev = DB::table('events')->find($id);
-        return response()->json(['evento'=>$ev]);
+        //bring 
+        if (isset($id)) {
+            $ev = DB::table('events')->find($id);
+            return response()->json(['evento'=>$ev]);
+        }
+        else {
+            return response()->json(['mensaje'=>'No se encontró el evento']);
+
+        }
+     
     }
 
     /**
@@ -65,7 +73,18 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response()->json(['mensaje'=>'Llamaste a Update'], 201);
+        //Actualizar un registro
+        if ($request->isJson()) {
+            $ev = Event::find($id);
+            $ev->nombre = $request->input('nombre');
+            $ev->descripcion = $request->input('descripcion');
+            $ev->save();
+
+            return response()->json(['mensaje'=>'actualización de evento exitoso'], 201);
+        }
+        else
+            return response()->json(['mensaje'=>'Datos en formato incorrecto'], 404);
+        // return response()->json(['mensaje'=>'Llamaste a Update'], 201);
     }
 
     /**
@@ -76,6 +95,9 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // us destroy to delete an id
+        $ev = Event::find($id);
+        $ev->delete();
+        return response()->json(['mensaje'=>'Evento eliminado'], 201);        
     }
 }

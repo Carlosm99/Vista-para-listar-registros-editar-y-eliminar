@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\mvc\EventController;
+use App\Http\Controllers\api\EventController;
 
 /*
 |--------------------------------------------------------------------------
