@@ -22,7 +22,12 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 
-Route::get('/events', [EventController::class, 'index']);
+// Route::get('/events', [EventController::class, 'index']
+// );
+// Route::delete('/events{id}', [EventController::class, 'destroy']
+
+// ) -> name ('events.destroy');
+Route::resource('/events', EventController::class);
 
 Route::get('/contact', function () {
     return view('pages.contact');

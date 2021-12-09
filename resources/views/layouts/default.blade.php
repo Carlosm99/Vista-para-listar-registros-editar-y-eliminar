@@ -6,10 +6,13 @@
 <body>
  <div class="container">
      <header class="row">
+         
          @include('includes.headerpage')
      </header>
 
      <div id="divContent" class="row">
+  
+         
          @yield('content')
      </div>
 

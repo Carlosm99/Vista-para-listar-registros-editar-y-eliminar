@@ -18,8 +18,10 @@ class EventController extends Controller
     {
         $eventos = Event::all();
 
-        return response()->json(['eventos'=>$eventos], 201,
+       response()->json(['eventos'=>$eventos], 201,
             ["Content-Type"=>"application/json"]);
+
+        return response()-> view('pages/events', compact('eventos'));
     }
 
     /**
@@ -28,19 +30,35 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+
+    public function create()
+    {
+        return view('pages/create');
+    }
+
     public function store(Request $request)
     {
-        //Agregar un nuevo registro
-        if ($request->isJson()) {
-            $nuevoEvt = new Event();
-            $nuevoEvt->nombre = $request->input('nombre'); //
-            $nuevoEvt->descripcion = $request->input('descripcion'); //"Concurso de programación anual del I.T. Chetumal";
-            $nuevoEvt->save();
+        // //Agregar un nuevo registro
+        // if ($request->isJson()) {
+        //     $nuevoEvt = new Event();
+        //     $nuevoEvt->nombre = $request->input('nombre'); //
+        //     $nuevoEvt->descripcion = $request->input('descripcion'); //"Concurso de programación anual del I.T. Chetumal";
+        //     $nuevoEvt->save();
 
-            return response()->json(['mensaje'=>'creación de evento exitoso'], 201);
-        }
-        else
-            return response()->json(['mensaje'=>'Datos en formato incorrecto'], 404);
+        //     return response()->json(['mensaje'=>'creación de evento exitoso'], 201);
+        // }
+        // else
+        //     return response()->json(['mensaje'=>'Datos en formato incorrecto'], 404);
+        $storeData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+           
+        ]);
+
+        $evento = Event::create($storeData);
+        
+        // return response()->json(['mensaje'=>'creación de evento exitoso'], 201);
+        return redirect()->route('events.index')->with('success', 'Evento actualizado con éxito');
     }
 
     /**
@@ -71,20 +89,20 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    public function edit($id)
+    {
+        $eventos = Event::findOrFail($id);
+        return view('pages/edit', compact('eventos'));
+    }
+    
     public function update(Request $request, $id)
     {
-        //Actualizar un registro
-        if ($request->isJson()) {
-            $ev = Event::find($id);
-            $ev->nombre = $request->input('nombre');
-            $ev->descripcion = $request->input('descripcion');
-            $ev->save();
-
-            return response()->json(['mensaje'=>'actualización de evento exitoso'], 201);
-        }
-        else
-            return response()->json(['mensaje'=>'Datos en formato incorrecto'], 404);
-        // return response()->json(['mensaje'=>'Llamaste a Update'], 201);
+        $updateData = $request->validate([
+            'nombre' => 'required|max:255',
+            'descripcion' => 'required|max:255',
+        ]);
+        Event::whereId($id)->update($updateData);
+        return redirect()->route('events.index')->with('success', 'Evento actualizado con éxito');
     }
 
     /**
@@ -97,7 +115,8 @@ class EventController extends Controller
     {
         // us destroy to delete an id
         $ev = Event::find($id);
+        
         $ev->delete();
-        return response()->json(['mensaje'=>'Evento eliminado'], 201);        
+        return redirect('/events')->with('completed', 'Student has been deleted');   
     }
 }
