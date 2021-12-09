@@ -27,7 +27,7 @@
 <table class="table">
   <thead>
     <tr>
-      <!-- <th scope="col">#</th> -->
+      <th scope="col">#</th>
       <th scope="col">Nombre</th>
       <th scope="col">Descripcion</th>
       <th scope="col">Actulizar</th>
@@ -35,8 +35,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr  @foreach ($eventos as $evt)>
-      <!-- <th scope="row">1</th> -->
+    <tr  @foreach ($eventos as $key => $evt)>
+      <th scope="row">{{$key}}</th>
       <td>{{ $evt->nombre }}</td>
       <td>{{ $evt->descripcion }}</td>
       <td>
