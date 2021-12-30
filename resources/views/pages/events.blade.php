@@ -9,7 +9,7 @@
    
    
 </style>
-    <h1>Lista de eventos realizados</h1>
+    <h1>Lista de eventos realizados (monterrosa)</h1>
 
     <!-- @foreach ($eventos as $evt)
         <p>Nombre {{ $evt->nombre }}</p>
