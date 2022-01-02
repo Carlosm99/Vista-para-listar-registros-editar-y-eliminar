@@ -33,11 +33,13 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('pages/create');
+        return view('pages.create');
     }
 
     public function store(Request $request)
     {
+
+        //*****not usefull */
         // //Agregar un nuevo registro
         // if ($request->isJson()) {
         //     $nuevoEvt = new Event();
@@ -49,6 +51,8 @@ class EventController extends Controller
         // }
         // else
         //     return response()->json(['mensaje'=>'Datos en formato incorrecto'], 404);
+         //*****not usefull */
+         
         $storeData = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',

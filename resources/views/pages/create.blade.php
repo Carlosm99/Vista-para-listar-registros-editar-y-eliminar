@@ -24,9 +24,10 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('events.store') }}">
+      <form method="post" enctype="multipart/form-data" action="{{ route('events.store') }}">
+      
           <div class="form-group">
-              @csrf
+          @csrf
               <label for="name">Nombre</label>
               <input type="text" class="form-control" name="nombre"/>
           </div>

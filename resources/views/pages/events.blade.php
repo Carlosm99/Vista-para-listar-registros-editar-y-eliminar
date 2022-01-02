@@ -36,7 +36,7 @@
   </thead>
   <tbody>
     <tr  @foreach ($eventos as $key => $evt)>
-      <th scope="row">{{$key}}</th>
+      <th scope="row">{{$key + 1}}</th>
       <td>{{ $evt->nombre }}</td>
       <td>{{ $evt->descripcion }}</td>
       <td>
